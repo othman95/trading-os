@@ -1,13 +1,22 @@
-import { create } from "zustand";
+import { action, observable, makeObservable } from "mobx";
+import { debounce } from "lodash";
+import { runInAction } from "mobx";
 
-interface SearchStoreProps {
-	symbol: string;
-	changeSymbol: (symbol: string) => void;
-	removeSymbol: () => void;
+class SearchStore {
+	constructor() {
+		makeObservable(this, { symbol: observable, changeSymbol: action, removeSymbol: action });
+	}
+	symbol = "";
+
+	changeSymbol = debounce((symbol: string) => {
+		runInAction(() => {
+			this.symbol = symbol;
+		});
+	}, 1000);
+
+	removeSymbol = () => {
+		this.symbol = "";
+	};
 }
 
-export const useSearchStore = create<SearchStoreProps>((set) => ({
-	symbol: "",
-	changeSymbol: (symbol: string) => set({ symbol }),
-	removeSymbol: () => set({ symbol: "" }),
-}));
+export const searchStore = new SearchStore();

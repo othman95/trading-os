@@ -1,10 +1,11 @@
 import { Text } from "@rneui/themed";
+import { observer } from "mobx-react";
 import React from "react";
-import { useSearchStore } from "../../store/search";
+import { searchStore } from "../../store/search";
 
 const SymbolList = () => {
-	const symbol = useSearchStore((state) => state.symbol);
+	const symbol = searchStore.symbol;
 	return <Text>{symbol}</Text>;
 };
 
-export default SymbolList;
+export default observer(SymbolList);
