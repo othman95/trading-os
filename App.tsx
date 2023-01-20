@@ -3,6 +3,7 @@ import { SearchBarAndroid } from "@rneui/base/dist/SearchBar/SearchBar-android";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import Main from "./src/components/Main/Main";
 import Search from "./src/components/Search/Search";
 import SymbolList from "./src/components/SymbolList/SymbolList";
 import { ColorProvider } from "./src/hooks/useColors";
@@ -14,8 +15,7 @@ export default function App() {
 				<View style={[styles.container]}>
 					<StatusBar style="auto" />
 					<SafeAreaView>
-						<Search />
-						<SymbolList />
+						<Main />
 					</SafeAreaView>
 				</View>
 			</ColorProvider>
