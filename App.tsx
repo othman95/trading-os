@@ -1,31 +1,31 @@
-import { Text } from "@rneui/base";
-import { SearchBarAndroid } from "@rneui/base/dist/SearchBar/SearchBar-android";
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, View } from "react-native";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import Main from "./src/components/Main/Main";
-import Search from "./src/components/Search/Search";
-import SymbolList from "./src/components/SymbolList/SymbolList";
-import { ColorProvider } from "./src/hooks/useColors";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { StatusBar } from 'expo-status-bar';
+import React, { Suspense } from 'react';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import Loading from './src/components/Loading/Loading';
+import { ColorProvider } from './src/hooks/useColors';
+import { DatabaseProvider } from './src/hooks/useDB';
+import NavContainer from './src/navigation/NavContainer';
 
-export default function App() {
-	return (
-		<SafeAreaProvider>
-			<ColorProvider>
-				<View style={[styles.container]}>
-					<StatusBar style="auto" />
-					<SafeAreaView>
-						<Main />
-					</SafeAreaView>
-				</View>
-			</ColorProvider>
-		</SafeAreaProvider>
-	);
+const queryClient = new QueryClient();
+function App() {
+    return (
+        <QueryClientProvider client={queryClient}>
+            <StatusBar style="auto" />
+            <DatabaseProvider>
+                <SafeAreaProvider>
+                    <ColorProvider>
+                        <Suspense fallback={<Loading />}>
+                            <GestureHandlerRootView style={{ flex: 1 }}>
+                                <NavContainer />
+                            </GestureHandlerRootView>
+                        </Suspense>
+                    </ColorProvider>
+                </SafeAreaProvider>
+            </DatabaseProvider>
+        </QueryClientProvider>
+    );
 }
 
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		paddingHorizontal: 20,
-	},
-});
+export default App;

@@ -1,5 +1,11 @@
-import axios from "axios";
-import { useQuery } from "react-query";
-import { api } from "./api";
+import { ISymbol } from '../types';
+import { api } from './api';
 
-export const getSymbols = () => api.get<{ name: string }[]>("symbols").then((res) => res);
+export const getSymbols = () =>
+    api
+        .get<string[]>('trade/symbols')
+        .then((res) => res.data)
+        .catch((err) => [] as string[]);
+
+export const getSymbol = (symbol: string) =>
+    api.get<ISymbol>(`trade/symbol/?symbol=${symbol}`).then((res) => res.data);
