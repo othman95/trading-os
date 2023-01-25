@@ -37,7 +37,7 @@ const SymbolScreen = ({ route }: StackScreenProps<'SymbolScreen'>) => {
                         .split(/[A-Z]/)
                         .map((a) => startCase(a))
                         .join(' ')}
-                    value={symbol[field]}
+                    value={+symbol[field]}
                 />
             ))}
         </ScrollView>

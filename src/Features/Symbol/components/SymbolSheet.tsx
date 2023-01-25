@@ -52,7 +52,7 @@ const SymbolSheet = observer(() => {
                         <KeyValue
                             key={field}
                             title={startCase(field)}
-                            value={symbolInfo.info[field]}
+                            value={+symbolInfo.info[field]}
                         />
                     </View>
                 )}
